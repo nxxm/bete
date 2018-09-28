@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>belle::vue benchmarks</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700%7CTitillium+Web:200,300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
+    <link href="assets/fonts/material-icons/material-icons.css" rel="stylesheet">
+    <link href="assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Libraries CSS -->
+    <link href="assets/css/libraries/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/libraries/animate.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="assets/semantic/semantic.min.css">
+
+    <!-- Custom CSS -->
+    <link href="assets/css/custom/theme.css" rel="stylesheet">
+    <link href="assets/css/custom/colors.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<!-- The #page-top ID is part of the scrolling feature -
+the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
+<body id="page-top" data-spy="scroll" data-target="#st-nav">
+
+<!-- Navigation Menu
+================================================== -->
+<header>
+    <div id="st-logo">
+            <p class="uniwar">
+                <img src="assets/images/logo_120.png" alt="Logo">
+                <span>N</span><span style="color: #FF851B  ;">X</span><span style="color: #FF851B  ;">X</span><span>M</span>
+            </p>
+    </div>
+</header>
+
+<!--<div id="st-nav">
+    <a href="#0" class="st-nav-trigger">
+        Menu<span></span>
+    </a>
+
+    <nav id="st-main-nav">
+        <ul>
+            <li>
+                <a class="page-scroll hvr-underline-from-center" href="#page-top">Home</a>
+            </li>
+            <li>
+                <a class="page-scroll hvr-underline-from-center" href="#our-work">Our Work</a>
+            </li>
+            <li>
+                <a class="page-scroll hvr-underline-from-center" href="#about">About Us</a>
+            </li>
+            <li>
+                <a class="page-scroll hvr-underline-from-center" href="#services">Services</a>
+            </li>
+            <li>
+                <a class="page-scroll hvr-underline-from-center" href="#skills">Our Skills</a>
+            </li>
+            <li>
+                <a class="page-scroll hvr-underline-from-center" href="#contact">Contact Us</a>
+            </li>
+        </ul>
+    </nav>
+</div>-->
+<!-- /#st-nav -->
+
+<!-- Hero Section
+================================================== -->
+<section id="hero" class="hero-section">
+
+  <!-- <div class="hero-layer"></div> -->
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+          <div class="col-md-12">
+                <div class="hero-logo">
+                    <img src="assets/images/cpp_logo.svg" alt="logo" class="logo-pic" id="test_cpp">
+                    vs
+                    <img src="assets/images/js_logo.svg" alt="logo" class="logo-pic" id="test_js">
+                </div>
+          </div>
+        </div>
+    </div>
+        
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+                <div class="benchmarks_details text-center">
+                  <canvas id="benchmark_graph"></canvas>
+                </div>
+          </div>
+        </div>
+        <!-- /.row -->
+
+        <div class="benchmarks" id="bellevue_app_div">
+          <div class="ui link items" v-for="benchmarks">
+            <div class="item">
+              <div class="ui mini image">
+                <img src="assets/images/cpp_logo.svg">
+              </div>
+              <div class="content">
+                <div class="header">#{{name}}</div>
+                <div class="description">
+                  <p></p>
+                  <p>min: {{min}}, max: {{max}}, avg:{{avg}}</p>
+                </div>
+              </div>
+            </div>
+       </div>
+   </div>
+
+ <!--<div class="item">
+              <div class="ui mini image">
+                <img src="assets/images/js_logo.svg">
+              </div>
+              <div class="content">
+                <div class="header">#{{id}}</div>
+                <div class="description">
+                  <p>C++: {{cpp_avg}} JS: {{js_avg}} </p>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="ui mini image">
+                <img src="assets/images/cpp_logo.svg">
+              </div>
+              <div class="content">
+                <div class="header">#{{id}}</div>
+                <div class="description">
+                  <p>C++: {{cpp_avg}} JS: {{js_avg}} </p>
+                </div>
+              </div>
+            </div>
+          </div>-->
+
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div id="playground">Playground</div>
+            <button class="ui button" type="button" id="save_results">save results</button> 
+          </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.hero-section -->
+
+<!-- Scripts
+================================================== -->
+<!-- jQuery -->
+<script src="assets/js/libraries/jquery-2.2.4.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="assets/js/libraries/bootstrap.js"></script>
+
+<!-- JavaScript Libraries -->
+<script src="assets/js/libraries/jquery.easing.1.3.js"></script>
+<script src="assets/js/libraries/wow.js"></script>
+<script src="assets/js/libraries/waypoint.js"></script>
+<script src="assets/js/libraries/jquery.counterup.js"></script>
+<!-- Custom Particle Theme JavaScript -->
+<script>
+    var sentences = ["Click on the logo to compare performance !"];
+</script>
+
+<script>
+window.chartColors = {
+	red: 'rgb(255, 99, 132)',
+	orange: 'rgb(255, 159, 64)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+	blue: 'rgb(54, 162, 235)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(201, 203, 207)'
+};
+
+(function(global) {
+	var Months = [
+		'Avg',
+		'Min',
+		'Max'
+	];
+
+	var COLORS = [
+		'#4dc9f6',
+		'#f67019',
+		'#f53794',
+		'#537bc4',
+		'#acc236',
+		'#166a8f',
+		'#00a950',
+		'#58595b',
+		'#8549ba'
+	];
+
+	var Samples = global.Samples || (global.Samples = {});
+	var Color = global.Color;
+
+	Samples.utils = {
+		// Adapted from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
+		srand: function(seed) {
+			this._seed = seed;
+		},
+
+		rand: function(min, max) {
+			var seed = this._seed;
+			min = min === undefined ? 0 : min;
+			max = max === undefined ? 1 : max;
+			this._seed = (seed * 9301 + 49297) % 233280;
+			return min + (this._seed / 233280) * (max - min);
+		},
+
+		numbers: function(config) {
+			var cfg = config || {};
+			var min = cfg.min || 0;
+			var max = cfg.max || 1;
+			var from = cfg.from || [];
+			var count = cfg.count || 8;
+			var decimals = cfg.decimals || 8;
+			var continuity = cfg.continuity || 1;
+			var dfactor = Math.pow(10, decimals) || 0;
+			var data = [];
+			var i, value;
+
+			for (i = 0; i < count; ++i) {
+				value = (from[i] || 0) + this.rand(min, max);
+				if (this.rand() <= continuity) {
+					data.push(Math.round(dfactor * value) / dfactor);
+				} else {
+					data.push(null);
+				}
+			}
+
+			return data;
+		},
+
+		labels: function(config) {
+			var cfg = config || {};
+			var min = cfg.min || 0;
+			var max = cfg.max || 100;
+			var count = cfg.count || 8;
+			var step = (max - min) / count;
+			var decimals = cfg.decimals || 8;
+			var dfactor = Math.pow(10, decimals) || 0;
+			var prefix = cfg.prefix || '';
+			var values = [];
+			var i;
+
+			for (i = min; i < max; i += step) {
+				values.push(prefix + Math.round(dfactor * i) / dfactor);
+			}
+
+			return values;
+		},
+
+		months: function(config) {
+			var cfg = config || {};
+			var count = cfg.count || 12;
+			var section = cfg.section;
+			var values = [];
+			var i, value;
+
+			for (i = 0; i < count; ++i) {
+				value = Months[Math.ceil(i) % 12];
+				values.push(value.substring(0, section));
+			}
+
+			return values;
+		},
+
+		color: function(index) {
+			return COLORS[index % COLORS.length];
+		},
+
+		transparentize: function(color, opacity) {
+			var alpha = opacity === undefined ? 0.5 : 1 - opacity;
+			return Color(color).alpha(alpha).rgbString();
+		}
+	};
+
+	// DEPRECATED
+	window.randomScalingFactor = function() {
+		return Math.round(Samples.utils.rand(-100, 100));
+	};
+
+	// INITIALIZATION
+
+	Samples.utils.srand(Date.now());
+
+
+
+}(this));
+
+
+
+		var MONTHS = ['Min', 'Max', 'Avg'];
+		var color = Chart.helpers.color;
+		barChartData = {
+			labels: ['Min', 'Max', 'Avg'],
+			datasets: [ {
+				label: 'C++',
+				backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+				borderColor: window.chartColors.blue,
+				borderWidth: 1,
+				data: [
+					12,
+					10,
+				  43	
+				]
+			},
+      {
+      label: 'JS',
+      backgroundColor: color(window.chartColors.yellow).alpha(0.5).rgbString(),
+      borderColor: window.chartColors.yellow,
+      borderWidth: 1,
+      data: [
+					7,
+					10,
+				  43	
+      ]
+    }]
+
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('benchmark_graph').getContext('2d');
+			myBar = new Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: false,
+						text: 'Benchmark'
+					}
+				}
+			});
+
+		};
+
+</script>
+
+
+<script type="text/c++">
+  #include <chrono>
+  #include <string>
+  #include <fmt/core.h>
+
+  #include <belle/vue.hxx>
+  #include <iostream>
+  #include <numeric>
+
+  #include <bete/remote_observable.hxx>
+  #include "datamodel.hxx"
+
+  using namespace std::string_literals;
+  using namespace belle::vue;
+
+  struct app_scope {
+    void main() {
+      init_benchmarker();
+
+      cli.connect("127.0.0.1", 8888);
+
+      auto btn_add = belle::vue::get_element_by_id("save_results");
+
+      btn_add.val_.set("onclick", js::bind([&](val event) {
+        datamodel->benchmarks->push_back(last_benchmark);
+      }, _1));
+    }
+
+    bete::observable_client cli{
+      [&]() { 
+        std::cout << "Connection opened !" << std::endl;
+        datamodel.deep_subscribe(cli, "/datamodel");
+      }
+    };
+
+    belle::vue::observable<benchmark> last_benchmark;
+    bete::remote_observable<datamodel_t> datamodel{};
+    belle::vue::app<datamodel_t> vue_{"bellevue_app_div", datamodel};
+
+    void init_benchmarker() {
+
+      // Setup benchmark
+      auto set_min = [](size_t min) {
+        val data = val::global("barChartData")["datasets"][0]["data"];
+        data.set(0, min);
+      };
+
+      auto set_max = [](size_t max) {
+        val data = val::global("barChartData")["datasets"][0]["data"];
+        data.set(1, max);
+      };
+
+      auto set_avg = [](size_t avg) {
+        val data = val::global("barChartData")["datasets"][0]["data"];
+        data.set(2, avg);
+      };
+
+
+      auto test_cpp = [&](emscripten::val e) {
+        std::vector<size_t> times;
+        times.reserve(100);
+
+        for (size_t i = 0; i < 100; ++i) {
+          auto start = std::chrono::high_resolution_clock::now();
+          auto element = get_element_by_id("playground");
+          
+          std::string text;
+          for (size_t j = 0; j < 100; ++j) {
+            text = fmt::format("Computing the WebAssembly answer {:d}", 43 * j);
+            element.innerHTML(text);
+          }
+
+          auto end = std::chrono::high_resolution_clock::now();
+          auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+          times.push_back(time);
+          auto result = element.innerHTML() + ", last try required : "s + std::to_string(time) + "us"s;
+          element.innerHTML(result);
+        }
+        
+        last_benchmark->min = *std::min_element(times.begin(), times.end());
+        set_min(last_benchmark->min.get_proxied());
+
+        last_benchmark->max = *std::max_element(times.begin(), times.end());
+        set_max(last_benchmark->max.get_proxied());
+
+        last_benchmark->avg = std::accumulate( times.begin(), times.end(), 0)/times.size();
+        set_avg(last_benchmark->avg.get_proxied());
+        val::global("myBar").call<val>("update");
+      };
+
+      get_element_by_id("test_cpp").val_.set("onclick", js::bind(test_cpp, _1));
+
+    }
+  };
+
+  static std::shared_ptr<app_scope> scope;
+
+  int main() {
+    scope = std::make_shared<app_scope>();
+    scope->main();
+    return 0;
+  }
+
+
+
+</script>
+
+<script type="text/javascript">
+  function test_js(e) {
+
+    var times = [];
+    for (var i = 0; i < 100; ++i) {
+      var start = performance.now();
+      var element = document.getElementById("playground");
+      
+      var string_answer = "";
+      for (var j = 0; j < 100; ++j) {
+        string_answer = "Computing the Javascript answer " + (43 * j);
+        element.innerHTML = string_answer; 
+      }
+
+      var end = performance.now();
+      var time = (end - start) * 1000;
+      times.push(time);
+
+    }
+
+    element.innerHTML = element.innerHTML + ", required : " + time + "us";
+
+
+    barChartData.datasets[1].data[0] = Math.min(...times);
+    barChartData.datasets[1].data[1] = Math.max(...times);
+
+    barChartData.datasets[1].data[2] = 
+      times.reduce(function(a, b) { return a + b; }) / times.length;
+    myBar.update();
+  }
+
+  document.getElementById("test_js").onclick = test_js;
+</script>
+</body>
+</html>

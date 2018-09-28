@@ -1,0 +1,9 @@
+{
+  
+    "nxxm/bellevue" : {}
+
+  , "fmtlib/fmt" : { "@" : "5.2.1" } 
+
+  ,  "cpp-pre/named_param" : { "@" : "feature/nxxm-migration" }
+  , "platform" : ["Boost::+boost", "Boost::filesystem" ]
+}

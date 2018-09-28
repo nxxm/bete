@@ -1,0 +1,1 @@
+nxxm run node build/wasm-cxx17/bin/server.js
