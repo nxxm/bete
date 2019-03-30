@@ -21,6 +21,7 @@
 
 #include <js/bind.hpp>
 #include <bete/common.hxx>
+#include <bete/mime/mime.types.hxx>
 #include <bete/runtime.hxx>
 #include <bete/request.hxx>
 #include <bete/response.hxx>
@@ -62,23 +63,6 @@ namespace bete {
 
   struct server {
     
-     static inline const std::map<std::string, std::string> mime_types{
-      { ".html", "text/html"},
-      { ".js", "text/javascript"},
-      { ".css", "text/css"},
-      { ".json", "application/json"},
-      { ".png", "image/png"},
-      { ".jpg", "image/jpg"},
-      { ".gif", "image/gif"},
-      { ".wav", "audio/wav"},
-      { ".mp4", "video/mp4"},
-      { ".woff", "application/font-woff"},
-      { ".ttf", "application/font-ttf"},
-      { ".eot", "application/vnd.ms-fontobject"},
-      { ".otf", "application/font-otf"},
-      { ".svg", "application/image/svg+xml"}
-    };
-
     server() :
       this_(bete::require("http")),
       fs_(bete::require("fs"))
@@ -212,8 +196,6 @@ namespace bete {
 
       if ( (fs::exists(path_rep)) && (fs::is_regular_file(path_rep)) ) {
         res.writeHead(200, { {"Content-Type", content_type } });
-        //TODO: Pipe file content to stream
-        
         auto read_stream = fs_.call<val>("createReadStream", url);
         read_stream.call<val>("pipe", res.val_);
       } else {
