@@ -5,5 +5,9 @@
   , "fmtlib/fmt" : { "@" : "5.2.1" } 
 
   ,  "cpp-pre/named_param" : { "@" : "feature/nxxm-migration" }
+
+  , "nxxm/mstch" : { "@" : "1.0.3", 
+                     "requires" : { "platform" : ["Boost::+boost"] }  }
+
   , "platform" : ["Boost::+boost", "Boost::filesystem" ]
 }
