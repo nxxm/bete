@@ -184,8 +184,7 @@ namespace bete {
       };
 
       // Check if a static file could not serve this
-      
-      if (url == "/") { url = "/workdir/index.html"; } else { url = "." + url; }
+      if (url == "/") { url = "index.html"; } else { url = "." + url; }
 
       auto path_rep = fs::path("workdir") / url; 
 
