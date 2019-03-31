@@ -190,8 +190,8 @@ namespace bete {
       auto path_rep = fs::path("workdir") / url; 
 
       std::string content_type = "application/octet-stream";
-      if (mime_types.find(path_rep.extension().generic_string()) != mime_types.end()) {
-        content_type = mime_types.at(path_rep.extension().generic_string());
+      if (mime::mime_types.find(path_rep.extension().generic_string()) != mime::mime_types.end()) {
+        content_type = mime::mime_types.at(path_rep.extension().generic_string());
       }
 
       if ( (fs::exists(path_rep)) && (fs::is_regular_file(path_rep)) ) {
