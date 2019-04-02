@@ -166,41 +166,54 @@ namespace bete {
       }
 
       auto url = req.url();
-      std::regex rx("/");
-      std::vector<std::string> url_parts {
-         std::sregex_token_iterator(url.begin(), url.end(), rx, -1),
-         std::sregex_token_iterator()
-      };
+      std::cout << "Serving : " << url << std::endl;
 
-      std::string base = url_parts[0];
-      for (auto iter_path = std::next(url_parts.begin()); iter_path != url_parts.end(); ++iter_path) {
-        base += "/"s + *iter_path;
-        std::cout << "trying to handle : " << base << "-- " << base.size() << std::endl;
-        auto range = handlers.equal_range(base);
-        for (auto it = range.first; it != range.second; ++it) {
-          std::cout << "Handling with route : " << it->first << std::endl;
-          if (it->second(req, res)) return;
+      std::regex url_regex("(/?[^ #?]*)\\x3f?([^ #]*)#?([^ ]*)");
+      std::smatch what;
+
+      if (regex_match(url, what, url_regex)) {
+
+        std::string path       = what[1];
+        //auto parameters = what[2];
+        //auto fragment   = what[3];
+
+        std::regex rx("/");
+        std::vector<std::string> path_parts {
+           std::sregex_token_iterator(path.begin(), path.end(), rx, -1),
+           std::sregex_token_iterator()
+        };
+
+
+        std::string base = path_parts[0];
+        for (auto iter_path = std::next(path_parts.begin()); iter_path != path_parts.end(); ++iter_path) {
+          base += "/"s + *iter_path;
+          std::cout << "trying to handle : " << base << "-- " << base.size() << std::endl;
+          auto range = handlers.equal_range(base);
+          for (auto it = range.first; it != range.second; ++it) {
+            std::cout << "Handling with route : " << it->first << std::endl;
+            if (it->second(req, res)) return;
+          }
+        };
+
+        // Check if a static file could not serve this
+        if (path == "/") { path = "index.html"; } else { path = "." + path; }
+
+        auto path_rep = fs::path("workdir") / path; 
+
+        std::string content_type = "application/octet-stream";
+        if (mime::mime_types.find(path_rep.extension().generic_string()) != mime::mime_types.end()) {
+          content_type = mime::mime_types.at(path_rep.extension().generic_string());
         }
-      };
 
-      // Check if a static file could not serve this
-      if (url == "/") { url = "index.html"; } else { url = "." + url; }
-
-      auto path_rep = fs::path("workdir") / url; 
-
-      std::string content_type = "application/octet-stream";
-      if (mime::mime_types.find(path_rep.extension().generic_string()) != mime::mime_types.end()) {
-        content_type = mime::mime_types.at(path_rep.extension().generic_string());
-      }
-
-      if ( (fs::exists(path_rep)) && (fs::is_regular_file(path_rep)) ) {
-        res.writeHead(200, { {"Content-Type", content_type } });
-        auto read_stream = fs_.call<val>("createReadStream", url);
-        read_stream.call<val>("pipe", res.val_);
-      } else {
-        // end any unserved request
-        res.writeHead(404, {});
-        res.end();
+        if ( (fs::exists(path_rep)) && (fs::is_regular_file(path_rep)) ) {
+          res.writeHead(200, { {"Content-Type", content_type } });
+          auto read_stream = fs_.call<val>("createReadStream", path);
+          read_stream.call<val>("pipe", res.val_);
+        } else {
+          // end any unserved request
+          res.writeHead(404, {});
+          res.end();
+        }
       }
       
     }
