@@ -129,6 +129,7 @@ application/smil+xml				smi smil
 application/timestamp-query
 application/timestamp-reply
 application/vemmi
+application/wasm				wasm
 application/whoispp-query
 application/whoispp-response
 application/wita

@@ -499,6 +499,7 @@ namespace bete::mime {
     , { ".vst", "application/vnd.visio" }
     , { ".vsw", "application/vnd.visio" }
     , { ".wad", "application/x-doom" }
+    , { ".wasm", "application/wasm" }
     , { ".wav", "audio/x-wav" }
     , { ".wax", "audio/x-ms-wax" }
     , { ".wbmp", "image/vnd.wap.wbmp" }
